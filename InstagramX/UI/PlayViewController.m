@@ -13,9 +13,8 @@
 
 @interface PlayViewController ()
 
-  @property NSMutableArray *persons;
+  @property NSMutableArray *persons;  // a person will have cats and dogs
   @property NSMutableArray *dogs;
-  @property NSMutableArray *cats;
 
 @end
 
@@ -25,93 +24,41 @@
     [super viewDidLoad];
 
     self.persons = [NSMutableArray new];
-    self.cats = [NSMutableArray new];
-    self.dogs = [NSMutableArray new];
 
-    //[self getCats];
-    //[self getDogs];
-
-    [self getPeople:^{
-        [self onUpdatedData];
-    }];
+    [self getPeople];
+    //[self createPersonAndTheirCat];
+    [self deleteCatsDogsAndPeople];  // wipe server
 }
-
--(void)onUpdatedData {
-
-    //[self createSampleData];
-    //[self updatePersonObject];  // change name of first person to superman
-    //[self deletePersonObject];  // delete first person
-    //[self deleteCatsDogsAndPeople];  // wipe server
-}
-
 
 #pragma mark: CRUD
 
-- (void)createSampleData {  // Be careful not to create dups.
+- (void)createPersonAndTheirCat {  // Be careful not to create dups.
 
-    [Person createPersonAndSaveToServerWithName:@"Sally" homeTown:@"Los Angeles" photo:nil completionBlock:^(Person *person) {
+    Cat *cat = [Cat object];
+    cat.name = @"Jumper";
 
-        [self.persons addObject:person];
-        NSLog(@"Added Person to DB: %@", person.name);
-        // reload data
+    Person *person = [Person object];  // Use this initializer!
+    person.name = @"Sally";
+    person.cat = cat;
+
+    [person saveUpdatedObjectWithCompletion:^(Person *person) {
+        NSLog(@"Added person and their cat.");
     }];
-
-    [Dog createDogWithName:@"Fido" weight:5 ownersName:@"Sally" completionBlock:^(Dog *dog) {
-        /* do nothing */ }];
-    [Dog createDogWithName:@"Max" weight:5 ownersName:@"Sally" completionBlock:^(Dog *dog) {
-        /* do nothing */ }];
-
-    [Cat createCatWithName:@"Jumper" weight:10 ownersName:@"Sue" completionBlock:^(Cat *cat) {
-        /* do nothing */ }];
-    [Cat createCatWithName:@"Shadow" weight:10 ownersName:@"Sue" completionBlock:^(Cat *cat) {
-        /* do nothing */ }];
-    [Cat createCatWithName:@"Domino" weight:10 ownersName:@"Sue" completionBlock:^(Cat *cat) {
-        /* do nothing */ }];
 }
 
--(void)getPeople:(void(^)(void))completionBlock {
+-(void)getPeople {
 
     [Person getPersonsFromServerWithCompletion:^(NSArray *persons) {
         self.persons = [NSMutableArray arrayWithArray:persons];
-        NSLog(@"got people");
-        completionBlock();
+        [self printLog];
     }];
 }
 
--(void)getDogs {
+-(void)printLog {
 
-    [Dog getDogsFromServerWithCompletion:^(NSArray *dogs) {
-        self.dogs = [NSMutableArray arrayWithArray:dogs];
-        NSLog(@"got dogs");
-    }];
-}
-
--(void)getCats {
-
-    [Cat getCatsWithCompletion:^(NSArray *cats) {
-        self.cats = [NSMutableArray arrayWithArray:cats];
-        NSLog(@"got cats");
-    }];
-}
-
-- (void)updatePersonObject {
-
-    Person *objectToEdit = self.persons.firstObject;
-    objectToEdit.name = @"Superman";
-    [objectToEdit saveUpdatedObjectWithCompletion:^(Person *person) {
-        // We already have the objects, so no need to do anything.
-        NSLog(@"Object Updated");
-    }];
-}
-
-- (void)deletePersonObject {
-
-    Person *objectToEdit = self.persons.firstObject;
-    [objectToEdit deleteWithCompletion:^{
-
-        // Remove from my array of local data.
-        [self.persons removeObject:objectToEdit];
-    }];
+    for (Person *person in self.persons) {
+        NSLog(@"%@ with cat named: %@", person.name, person.cat.name);
+    }
 }
 
 
@@ -121,15 +68,13 @@
 
     // Quick and dirty.
     for (Person *person in self.persons) {
-        [person delete];
+
+        [person delete];  // remove from server (but still have locally)
+        [person.cat delete];
     }
 
     for (Dog *dog in self.dogs) {
         [dog delete];
-    }
-
-    for (Cat *cat in self.cats) {
-        [cat delete];
     }
 }
 

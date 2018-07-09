@@ -9,13 +9,14 @@
 #import "Person.h"
 
 @implementation Person
-  @dynamic name, homeTown, photo;
+  @dynamic name, homeTown, photo, cat;
 
-+(void)createPersonAndSaveToServerWithName:(NSString *)name homeTown:(NSString *)homeTown photo:UIImage completionBlock:(void(^)(Person *person))completionBlock {
++(void)createPersonAndSaveToServerWithName:(NSString *)name homeTown:(NSString *)homeTown photo:(UIImage *)image cat:(Cat *)cat completionBlock:(void(^)(Person *person))completionBlock {
 
     Person *person = [Person object];  // Use this initializer!
     person.name = name;
     person.homeTown = homeTown;
+    person.cat = cat;
     // Todo: person.photo =
 
     [person saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
@@ -26,6 +27,7 @@
 +(void)getPersonsFromServerWithCompletion:(void(^)(NSArray *persons))completionBlock {
 
     PFQuery *query = [Person query];
+    [query includeKey:@"cat"];  // GET ATTACHED CAT OBJECT
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
 
         completionBlock(objects);

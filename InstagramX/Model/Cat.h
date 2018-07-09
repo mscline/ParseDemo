@@ -15,11 +15,4 @@
   @property int weight;
   @property NSString *ownersName;
 
-  +(void)createCatWithName:(NSString *)name
-                    weight:(int)weight
-                ownersName:(NSString *)ownersName
-           completionBlock:(void(^)(Cat *cat))completionBlock;
-
-  +(void)getCatsWithCompletion:(void(^)(NSArray *cats))completionBlock;
-
 @end

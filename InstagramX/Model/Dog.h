@@ -15,11 +15,4 @@
   @property int weight;
   @property NSString *ownersName;
 
-  +(void)createDogWithName:(NSString *)name
-                    weight:(int)weight
-                ownersName:(NSString *)ownersName
-           completionBlock:(void(^)(Dog *dog))completionBlock;
-
-  +(void)getDogsFromServerWithCompletion:(void(^)(NSArray *dogs))completionBlock;
-
 @end

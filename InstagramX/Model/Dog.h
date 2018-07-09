@@ -14,7 +14,6 @@
 
   @property NSString *name;
   @property int weight;
-  @property NSString *ownersName;
 
   // RELATIONSHIP
   @property Person *owner;

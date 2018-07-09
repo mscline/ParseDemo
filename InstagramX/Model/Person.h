@@ -12,18 +12,13 @@
 
 @interface Person : PFObject <PFSubclassing>  // Replace NSObject with PFObject and implement PFSubclassing.
 
-
   @property NSString *name;
   @property NSString *homeTown;
   @property PFFile *photo;  // Large files should be stored as PFFiles.
 
-
   // RELATIONSHIPS
-  // one-to-one (a person may only have one cat)
-  @property Cat *cat;
-
-  // one-to-many (a person may have more than one dog)
-  // See Dogs.h
+  @property Cat *cat;       // one-to-one  (a person may only have one cat)
+  @property NSArray *dogs;  // one-to-many (a person may have more than one dog)
 
 
   // CRUD (Create, read, update, delete.)

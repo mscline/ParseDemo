@@ -20,19 +20,21 @@
 
 @implementation PlayViewController
 
-- (void)viewDidLoad {
+-(void)viewDidLoad {
     [super viewDidLoad];
 
     self.persons = [NSMutableArray new];
 
+    // MAKE SURE WE CAN DO THESE FOUR THINGS
     [self getPeople];
     //[self createPersonAndTheirCat];
-    [self deleteCatsDogsAndPeople];  // wipe server
+    //[self createPersonAndTheirDogs];
+    //[self deleteCatsDogsAndPeople];  // wipe server
 }
 
 #pragma mark: CRUD
 
-- (void)createPersonAndTheirCat {  // Be careful not to create dups.
+-(void)createPersonAndTheirCat {  // Be careful not to create dups.
 
     Cat *cat = [Cat object];
     cat.name = @"Jumper";
@@ -46,10 +48,34 @@
     }];
 }
 
+-(void )createPersonAndTheirDogs {
+
+    Dog *dogA = [Dog object];
+    dogA.name = @"Dog A";
+
+    Dog *dogB = [Dog object];
+    dogB.name = @"Dog B";
+
+    Dog *dogC = [Dog object];
+    dogC.name = @"Dog C";
+
+    Person *person = [Person object];  // Use this initializer!
+    person.name = @"Dog Owner";
+    person.dogs = [NSArray arrayWithObjects:dogA, dogB, dogC, nil];
+
+    [person saveUpdatedObjectWithCompletion:^(Person *person) {
+        NSLog(@"Added person and their dogs.");
+    }];
+}
+
 -(void)getPeople {
 
-    [Person getPersonsFromServerWithCompletion:^(NSArray *persons) {
-        self.persons = [NSMutableArray arrayWithArray:persons];
+    PFQuery *query = [Person query];
+    [query includeKey:@"cat"];  // GET ATTACHED CAT OBJECT
+    [query includeKey:@"dogs"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+
+        self.persons = [NSMutableArray arrayWithArray:objects];
         [self printLog];
     }];
 }
@@ -58,6 +84,9 @@
 
     for (Person *person in self.persons) {
         NSLog(@"%@ with cat named: %@", person.name, person.cat.name);
+        for (Dog *dog in person.dogs) {
+            NSLog(@"and with a dog named: %@", dog.name);
+        }
     }
 }
 
@@ -67,15 +96,23 @@
 - (void)deleteCatsDogsAndPeople {
 
     // Quick and dirty.
-    for (Person *person in self.persons) {
+    PFQuery *query = [Person query];
+    [query includeKey:@"cat"];
+    [query includeKey:@"dogs"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
 
-        [person delete];  // remove from server (but still have locally)
-        [person.cat delete];
-    }
+        for (Person *person in objects) {
 
-    for (Dog *dog in self.dogs) {
-        [dog delete];
-    }
+            for (Dog *dog in person.dogs) {
+                [dog delete];
+            }
+            [person.cat delete];
+            [person delete];  // remove from server (but still have locally)
+        }
+
+        NSLog(@"Async deletions sent.");
+
+    }];
 }
 
 @end

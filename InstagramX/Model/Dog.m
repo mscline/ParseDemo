@@ -9,7 +9,7 @@
 #import "Dog.h"
 
 @implementation Dog
-  @dynamic name, weight, ownersName;
+  @dynamic name, weight, ownersName, owner;
 
 // PROTOCOL CONFORMANCE
 + (nonnull NSString *)parseClassName {

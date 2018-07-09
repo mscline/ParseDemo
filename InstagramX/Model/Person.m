@@ -9,7 +9,7 @@
 #import "Person.h"
 
 @implementation Person
-  @dynamic name, homeTown, photo, cat;
+  @dynamic name, homeTown, photo, cat, dogs;
 
 +(void)createPersonAndSaveToServerWithName:(NSString *)name homeTown:(NSString *)homeTown photo:(UIImage *)image cat:(Cat *)cat completionBlock:(void(^)(Person *person))completionBlock {
 

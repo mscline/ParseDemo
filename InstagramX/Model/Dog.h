@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import "Person.h"
 
 @interface Dog : PFObject <PFSubclassing>
 
   @property NSString *name;
   @property int weight;
   @property NSString *ownersName;
+
+  // RELATIONSHIP
+  @property Person *owner;
 
 @end

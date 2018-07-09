@@ -14,7 +14,6 @@
 @interface PlayViewController ()
 
   @property NSMutableArray *persons;  // a person will have cats and dogs
-  @property NSMutableArray *dogs;
 
 @end
 

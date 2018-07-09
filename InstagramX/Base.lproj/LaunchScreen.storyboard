@@ -17,18 +17,7 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heartsplash_1 copy" translatesAutoresizingMaskIntoConstraints="NO" id="ak1-ov-p3E">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            </imageView>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="ak1-ov-p3E" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="DcT-9L-0WP"/>
-                            <constraint firstItem="ak1-ov-p3E" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="FTI-hK-wyL"/>
-                            <constraint firstItem="ak1-ov-p3E" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="cJ5-dg-DOs"/>
-                            <constraint firstItem="ak1-ov-p3E" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="mFU-iV-zIB"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -37,7 +26,4 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="heartsplash_1 copy" width="640" height="1136"/>
-    </resources>
 </document>

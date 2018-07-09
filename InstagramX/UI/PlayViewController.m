@@ -38,7 +38,7 @@
 
 -(void)onUpdatedData {
 
-    [self createSampleData];
+    //[self createSampleData];
     //[self updatePersonObject];  // change name of first person to superman
     //[self deletePersonObject];  // delete first person
     //[self deleteCatsDogsAndPeople];  // wipe server

@@ -44,7 +44,6 @@
         if (succeeded && error == nil) {
             [self performSegueWithIdentifier:@"DidSignUp" sender:nil];
             NSLog(@"User signed up.");
-            //[self dismissViewControllerAnimated:true completion:^{}];
         } else {
             if (error.code == 202) {
                 [Alert presentAlertWithTitle:@"User name taken." fromViewController:self];

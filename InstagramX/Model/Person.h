@@ -26,7 +26,7 @@
                                     homeTown:(NSString *)homeTown
                                        photo:(UIImage *)image
                                          cat:(Cat *)cat
-                             completionBlock:(void(^)(Person *person))completionBlock;
+                             completionBlock:(void(^)(Person *person))completionBlock;  // Could also add dogs to initializer.
   +(void)getPersonsFromServerWithCompletion:(void(^)(NSArray *persons))completionBlock;
   -(void)saveUpdatedObjectWithCompletion:(void(^)(Person *person))completionBlock;
   -(void)deleteWithCompletion:(void(^)(void))completionBlock;  // Parse already has a delete and a delete with block call, but I wanted implement full CRUD.

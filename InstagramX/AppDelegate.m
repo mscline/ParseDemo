@@ -38,6 +38,7 @@
 
     [Parse initializeWithConfiguration: [ParseClientConfiguration configurationWithBlock: ^ (id < ParseMutableClientConfiguration > _Nonnull configuration) {
 
+        // UPDATE APP ID, CLIENT ID, AND SERVER URL HERE
         configuration.applicationId = @"ancient-plateau-58463";
         configuration.clientKey = @"myMasterKey2sldkfjlskfjlskfjl";
         configuration.server = @"http://ancient-plateau-58463.herokuapp.com/parse";

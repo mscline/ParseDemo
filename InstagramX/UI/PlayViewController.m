@@ -25,6 +25,7 @@
     self.persons = [NSMutableArray new];
 
     // MAKE SURE WE CAN DO THESE FOUR THINGS
+    // (they are async, so rerun app to try next one out)
     [self getPeople];
     //[self createPersonAndTheirCat];
     //[self createPersonAndTheirDogs];
@@ -33,12 +34,12 @@
 
 #pragma mark: CRUD
 
--(void)createPersonAndTheirCat {  // Be careful not to create dups.
+-(void)createPersonAndTheirCat {
 
     Cat *cat = [Cat object];
     cat.name = @"Jumper";
 
-    Person *person = [Person object];  // Use this initializer!
+    Person *person = [Person object];  // Use this initializer!  (Or use the custom Person initializer.)
     person.name = @"Sally";
     person.cat = cat;
 
@@ -71,7 +72,7 @@
 
     PFQuery *query = [Person query];
     [query includeKey:@"cat"];  // GET ATTACHED CAT OBJECT
-    [query includeKey:@"dogs"];
+    [query includeKey:@"dogs"]; // GET ATTACHED DOG OBJECTS
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
 
         self.persons = [NSMutableArray arrayWithArray:objects];
